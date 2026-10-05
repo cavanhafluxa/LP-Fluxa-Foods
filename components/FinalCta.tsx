@@ -1,17 +1,23 @@
 export default function FinalCta() {
   return (
-    <section className="section final-cta on-red">
+    <section className="section finalcta">
       <div className="container">
-        <div className="final-cta-inner reveal">
-          <h2 className="fc-head">
-            <span className="fc-line fc-1">Pare de</span>
-            <span className="fc-line fc-2">alugar.</span>
-            <span className="fc-line fc-3">Comece a</span>
-            <span className="fc-line fc-4">crescer.</span>
+        <div className="finalcta-inner reveal">
+          <h2>
+            Seus clientes. Sua margem.{" "}
+            <span className="mark">Seu sistema.</span>
           </h2>
-          <a href="#contato" className="btn-primary fc-btn">
-            Agendar demonstração gratuita
+          <p>
+            Pare de entregar cliente e comissão ao marketplace. Comece hoje a
+            construir a sua base com pontos, WhatsApp e 0% de comissão.
+          </p>
+          <a href="#cadastro" className="btn btn-red btn-lg">
+            Começar Agora
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M8.5 3.5l4.5 4.5-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </a>
+          <div className="finalcta-note">Teste grátis · 0% de comissão · sem enrolação</div>
         </div>
       </div>
     </section>

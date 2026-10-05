@@ -1,21 +1,35 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Poppins, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
+const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-jakarta",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title:
-    "Fluxa Foods — Pare de alugar sistemas que travam sua cozinha e sequestram seus clientes",
+    "Fluxa Foods | O sistema que faz o seu cliente voltar",
   description:
-    "O sistema que o Lanas Burguer escolheu: Fluxa Kitchen + Fluxa Cardápio. Organize a cozinha, converta mais pedidos, construa sua base própria e pare de pagar taxas abusivas.",
+    "Programa de pontos, cardápio próprio, status do pedido no WhatsApp, reativação automática de clientes, PDV com QR nas mesas, estoque, rota do motoboy e financeiro. 0% de comissão: a base de clientes é sua.",
   icons: {
-    icon: "/Favicon.fluxa.png",
+    icon: "/favicon.fluxa.png",
   },
 };
 
@@ -23,8 +37,6 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  // No fixed theme-color: lets iOS use its translucent, content-blurring
-  // status/address bars (frosted) instead of a solid black band.
 };
 
 export default function RootLayout({
@@ -33,7 +45,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={jakarta.variable}>
+    <html
+      lang="pt-BR"
+      className={`${poppins.variable} ${inter.variable} ${mono.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

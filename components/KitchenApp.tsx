@@ -1,146 +1,179 @@
-/* Fluxa Kitchen app dashboard — clean recreation (no emojis, generic data). */
+"use client";
 
-function UserIcon() {
+import { useEffect, useState } from "react";
+
+/* Recriação em CSS da tela inicial do Fluxa Kitchen Hub. Mesma estrutura do
+   print real (/public/kitchen.png): cabeçalho, saudação, 4 indicadores, alerta
+   de estoque, últimos pedidos e barra de abas. Os números são ilustrativos de
+   uma noite de movimento. Com `live`, os indicadores sobem em contagem e um
+   pedido novo entra na lista, mostrando o "tempo real" do painel. */
+
+const FINAL = { pedidos: 47, faturamento: 2318, ticket: 49 };
+
+const ORDERS = [
+  { id: "#0192", name: "Cliente Cardápio", tone: "novo", label: "novo", price: "R$ 62" },
+  { id: "#0191", name: "Mesa 3", tone: "prep", label: "preparando", price: "R$ 84" },
+  { id: "#0190", name: "Delivery", tone: "pronto", label: "pronto", price: "R$ 48" },
+];
+
+const TABS = [
+  { label: "Início", on: true, d: "M4 11l8-6 8 6v9h-5v-6h-6v6H4z" },
+  { label: "Pedidos", d: "M6 3h12v18l-3-2-3 2-3-2-3 2V3zM9 8h6M9 12h6" },
+  { label: "Cardápio", d: "M7 3v8a2.5 2.5 0 0 0 5 0V3M9.5 3v18M17 3c-1.6 1.8-2 3.6-2 6.5 0 1.5.6 2.5 2 2.5v9" },
+  { label: "Mesas", d: "M3 9h18M6 9l-1.5 7M18 9l1.5 7M9 9V6h6v3" },
+  { label: "Mais", d: "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" },
+];
+
+const brl = (n: number) => "R$ " + Math.round(n).toLocaleString("pt-BR");
+
+function Icon({ d, size = "1.2em" }: { d: string; size?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <circle cx="12" cy="8.5" r="4" />
-      <path d="M4.5 20a7.5 7.5 0 0 1 15 0Z" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      style={{ width: size, height: size }}
+    >
+      <path d={d} />
     </svg>
   );
 }
 
-const STATS = [
-  {
-    tone: "r",
-    label: "Pedidos hoje",
-    value: "28",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
-        <rect x="5" y="3" width="14" height="18" rx="2" />
-        <path d="M8.5 8h7M8.5 12h7M8.5 16h4" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    tone: "g",
-    label: "Faturamento",
-    value: "R$ 1.480",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
-        <circle cx="12" cy="12" r="8.5" />
-        <path d="M12 7v10M9.5 14.2c.4 1 1.3 1.6 2.5 1.6 1.5 0 2.4-.8 2.4-1.9 0-2.6-4.7-1.5-4.7-4 0-1 .9-1.8 2.3-1.8 1.1 0 2 .6 2.3 1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    tone: "b",
-    label: "Ticket médio",
-    value: "R$ 53",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
-        <path d="M5 19V10M12 19V5M19 19v-6" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    tone: "y",
-    label: "Mesas ocupadas",
-    value: "3/6",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
-        <path d="M4 9h16M6 9l-1 5M18 9l1 5M9 9V6h6v3" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-];
+const KPI_ICONS = {
+  pedidos: "M6 3h12v18l-3-2-3 2-3-2-3 2V3zM9 8h6M9 12h6",
+  faturamento:
+    "M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM12 7.5v9M14.3 9.7c-.4-.9-1.3-1.4-2.3-1.4-1.4 0-2.3.8-2.3 1.8 0 2.4 4.7 1.3 4.7 3.8 0 1-1 1.8-2.4 1.8-1.1 0-2-.6-2.4-1.5",
+  ticket: "M5 19v-8M12 19V5M19 19v-8",
+  mesas: "M3 9h18M6 9l-1.5 7M18 9l1.5 7M9 9V6h6v3",
+};
 
-const TABS = [
-  { label: "Início", on: true, icon: <path d="M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1Z" /> },
-  { label: "Pedidos", icon: <path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z" /> },
-  { label: "Cardápio", icon: <path d="M6 3v8a3 3 0 0 0 6 0V3M9 3v18M18 3c-1.5 1.5-2 3-2 6s.5 4 2 4v8" /> },
-  { label: "Mesas", icon: <path d="M4 9h16M6 9l-1 6M18 9l1 6" /> },
-  { label: "Mais", icon: <path d="M5 6h14M5 12h14M5 18h14" /> },
-];
+/* 0 → 1 com ease-out; começa em 1 (valores finais) para o HTML do servidor já vir completo */
+function useCountUp(active: boolean) {
+  const [t, setT] = useState(1);
+  useEffect(() => {
+    if (!active) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const start = performance.now() + 450;
+    const dur = 1500;
+    let raf = 0;
+    setT(0);
+    const tick = (now: number) => {
+      const p = Math.min(Math.max((now - start) / dur, 0), 1);
+      setT(1 - Math.pow(1 - p, 3));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [active]);
+  return t;
+}
 
-export default function KitchenApp() {
+export default function KitchenApp({ live = false }: { live?: boolean }) {
+  const t = useCountUp(live);
+  const [showNew, setShowNew] = useState(!live);
+
+  useEffect(() => {
+    if (!live) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const id = window.setTimeout(() => setShowNew(true), reduce ? 0 : 2200);
+    return () => window.clearTimeout(id);
+  }, [live]);
+
+  const orders = showNew ? ORDERS : ORDERS.slice(1);
+
   return (
-    <div className="kapp">
-      <div className="kapp-top">
-        <span className="kapp-logo">F</span>
-        <span className="kapp-avatar" aria-hidden="true">
-          <UserIcon />
+    <div className="kapp" aria-label="Painel Fluxa Kitchen Hub">
+      <div className="kapp-status" aria-hidden="true">
+        <span>19:32</span>
+        <span className="kapp-status-r">
+          <i className="sig" />
+          <i className="wifi" />
+          <i className="bat" />
         </span>
       </div>
 
-      <div className="kapp-scroll">
-        <div className="kapp-greet">Boa tarde, Chef!</div>
-        <div className="kapp-date">quinta-feira, 25 de junho</div>
+      <div className="kapp-top">
+        <div className="kapp-brand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="kapp-logo" src="/fluxa-f.png" alt="" />
+          Lanas Burger
+        </div>
+        <span className="kapp-avatar" aria-hidden="true">
+          <Icon d="M12 5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM5 20c1-3.6 3.8-5.5 7-5.5s6 1.9 7 5.5" size="1.3em" />
+        </span>
+      </div>
 
-        <div className="kapp-stats">
-          {STATS.map((s) => (
-            <div className="kapp-stat" key={s.label}>
-              <span className={`kapp-stat-ico ${s.tone}`}>{s.icon}</span>
-              <span className="kapp-stat-lbl">{s.label}</span>
-              <b>{s.value}</b>
+      <div className="kapp-body">
+        <div className="kapp-greet">Boa noite, Aline!</div>
+        <div className="kapp-date">sexta-feira, 11 de setembro</div>
+
+        <div className="kapp-kpis">
+          <div className="kapp-kpi">
+            <div className="kapp-kpi-h">
+              <span className="kapp-kpi-ico r"><Icon d={KPI_ICONS.pedidos} /></span>
+              <span className="kapp-kpi-l">Pedidos hoje</span>
             </div>
-          ))}
+            <b>{Math.round(FINAL.pedidos * t)}</b>
+          </div>
+          <div className="kapp-kpi">
+            <div className="kapp-kpi-h">
+              <span className="kapp-kpi-ico g"><Icon d={KPI_ICONS.faturamento} /></span>
+              <span className="kapp-kpi-l">Faturamento</span>
+            </div>
+            <b>{brl(FINAL.faturamento * t)}</b>
+          </div>
+          <div className="kapp-kpi">
+            <div className="kapp-kpi-h">
+              <span className="kapp-kpi-ico b"><Icon d={KPI_ICONS.ticket} /></span>
+              <span className="kapp-kpi-l">Ticket médio</span>
+            </div>
+            <b>{brl(FINAL.ticket * t)}</b>
+          </div>
+          <div className="kapp-kpi">
+            <div className="kapp-kpi-h">
+              <span className="kapp-kpi-ico y"><Icon d={KPI_ICONS.mesas} /></span>
+              <span className="kapp-kpi-l">Mesas ocupadas</span>
+            </div>
+            <b>5/8</b>
+          </div>
         </div>
 
         <div className="kapp-alert">
-          <div className="kapp-alert-head">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 4 22 20H2L12 4Z" strokeLinejoin="round" />
-              <path d="M12 10v4" strokeLinecap="round" />
-              <circle cx="12" cy="17" r="1" fill="currentColor" />
-            </svg>
-            Estoque baixo (2)
+          <div className="kapp-alert-h">
+            <Icon d="M12 4 21 20H3L12 4zM12 10v4M12 17h.01" size="1.15em" />
+            Estoque baixo (1)
           </div>
           <div className="kapp-alert-row">
-            <span>Carne</span>
-            <b>-3200 g</b>
+            <span>Pão brioche</span>
+            <b>-12 un</b>
           </div>
-          <div className="kapp-alert-row">
-            <span>Pão Brioche</span>
-            <b>-22 un</b>
-          </div>
-          <div className="kapp-alert-link">Ver estoque →</div>
+          <div className="kapp-link">Ver estoque →</div>
         </div>
 
         <div className="kapp-orders">
-          <div className="kapp-orders-head">
-            <b>Últimos pedidos</b>
-            <span>Ver todos →</span>
+          <div className="kapp-orders-h">
+            Últimos pedidos <span>Ver todos →</span>
           </div>
-          <div className="kapp-order">
-            <span className="kapp-order-id">#0154</span>
-            <span className="kapp-order-name">Cliente balcão</span>
-            <span className="kapp-order-badge novo">novo</span>
-            <span className="kapp-order-price">R$ 47</span>
-          </div>
-          <div className="kapp-order">
-            <span className="kapp-order-id">#0136</span>
-            <span className="kapp-order-name">Cardápio digital</span>
-            <span className="kapp-order-badge entregue">entregue</span>
-            <span className="kapp-order-price">R$ 33</span>
-          </div>
+          {orders.map((o) => (
+            <div className={`kapp-order${o.tone === "novo" ? " is-new" : ""}`} key={o.id}>
+              <span className="kapp-order-id">{o.id}</span>
+              <span className="kapp-order-name">{o.name}</span>
+              <span className={`kapp-pill ${o.tone}`}>{o.label}</span>
+              <span className="kapp-order-price">{o.price}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="kapp-tabs">
-        {TABS.map((t) => (
-          <div className={`kapp-tab${t.on ? " on" : ""}`} key={t.label}>
-            <svg
-              className="kapp-tab-ico"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {t.icon}
-            </svg>
-            {t.label}
+      <div className="kapp-tabs" aria-hidden="true">
+        {TABS.map((tab) => (
+          <div className={`kapp-tab${tab.on ? " on" : ""}`} key={tab.label}>
+            <span className="kapp-tab-ico"><Icon d={tab.d} size="1.75em" /></span>
+            {tab.label}
           </div>
         ))}
       </div>

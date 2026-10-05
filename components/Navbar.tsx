@@ -1,31 +1,52 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const LINKS = [
+  { href: "#sistema", label: "O sistema" },
+  { href: "#fidelidade", label: "Fidelidade" },
+  { href: "#operacao", label: "Operação" },
+  { href: "#precos", label: "Preços" },
+  { href: "#case", label: "Resultados" },
+  { href: "#faq", label: "FAQ" },
+];
 
 export default function Navbar() {
-  // "scrolled" = past the dark hero. Over the hero the nav stays transparent
-  // (dark), so there's no sudden white band near the status bar; once a light
-  // section reaches the top it turns into the seamless cream bar.
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [open, setOpen] = useState(false);
+  const lastY = useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
-      const hero = document.querySelector<HTMLElement>(".hero");
-      const threshold = hero ? hero.offsetHeight - 64 : window.innerHeight - 64;
-      setScrolled(window.scrollY > threshold);
+      const y = window.scrollY;
+      setScrolled(y > 8);
+
+      if (y < 80) {
+        // perto do topo: sempre visível
+        setHidden(false);
+      } else if (y > lastY.current + 4) {
+        // rolando para baixo: esconde
+        setHidden(true);
+      } else if (y < lastY.current - 4) {
+        // rolando para cima: mostra
+        setHidden(false);
+      }
+      lastY.current = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
     onScroll();
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const close = () => setOpen(false);
+  const isHidden = hidden && !open;
+
   return (
-    <nav id="navbar" className={scrolled ? "scrolled" : ""}>
-      <a href="#" className="nav-logo" aria-label="Fluxa Foods">
+    <nav
+      className={`${scrolled ? "scrolled" : ""}${isHidden ? " nav-hidden" : ""}`}
+    >
+      <a href="#topo" className="nav-logo" aria-label="Fluxa Foods">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="nav-logo-icon" src="/fluxa-f.png" alt="" />
         <span className="nav-logo-text">
@@ -33,16 +54,42 @@ export default function Navbar() {
           <span className="nlt-sub">Foods</span>
         </span>
       </a>
+
       <div className="nav-links">
-        <a href="#dor">O problema</a>
-        <a href="#produto">O sistema</a>
-        <a href="#comparativo">Comparativo</a>
-        <a href="#precos">Preços</a>
-        <a href="#case">Case</a>
+        {LINKS.map((l) => (
+          <a key={l.href} href={l.href}>
+            {l.label}
+          </a>
+        ))}
       </div>
+
       <div className="nav-right">
-        <a href="#contato" className="nav-cta">
-          Agendar demo
+        <a href="#cadastro" className="nav-cta">
+          Começar Agora
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <path d="M3 7.5h9M8 3.5l4 4-4 4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </a>
+        <button
+          className={`nav-hamburger${open ? " open" : ""}`}
+          aria-label="Menu"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <div className={`nav-drawer${open ? " open" : ""}`}>
+        {LINKS.map((l) => (
+          <a key={l.href} href={l.href} onClick={close}>
+            {l.label}
+          </a>
+        ))}
+        <a href="#cadastro" className="nav-drawer-cta" onClick={close}>
+          Começar Agora
         </a>
       </div>
     </nav>
