@@ -29,7 +29,11 @@ export const metadata: Metadata = {
   description:
     "Programa de pontos, cardápio próprio, status do pedido no WhatsApp, reativação automática de clientes, PDV com QR nas mesas, estoque, rota do motoboy e financeiro. 0% de comissão: a base de clientes é sua.",
   icons: {
-    icon: "/favicon.fluxa.png",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
 };
 
