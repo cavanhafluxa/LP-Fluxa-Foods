@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import SegmentsMarquee from "@/components/SegmentsMarquee";
+import VideoShowcase from "@/components/VideoShowcase";
 import SystemTour from "@/components/SystemTour";
 import BigIdea from "@/components/BigIdea";
 import Pains from "@/components/Pains";
@@ -26,6 +27,7 @@ export default function Home() {
         <Hero />
         <SegmentsMarquee />
       </div>
+      <VideoShowcase />
       <SystemTour />
       <BigIdea />
       <Pains />

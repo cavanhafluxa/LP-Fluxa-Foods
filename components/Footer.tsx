@@ -6,11 +6,7 @@ export default function Footer() {
           <div className="footer-brand">
             <div className="footer-logo">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/fluxa-f.png" alt="" />
-              <span className="nav-logo-text">
-                <span className="nlt-main">Fluxa</span>
-                <span className="nlt-sub">Foods</span>
-              </span>
+              <img className="brand-logo" src="/logo-fluxa.svg" alt="Fluxa Foods" width={960} height={298} />
             </div>
             <p className="footer-tagline">
               O sistema que faz o seu cliente{" "}
@@ -63,9 +59,6 @@ export default function Footer() {
         <div className="footer-bottom">
           <span className="footer-copy">
             © 2026 Fluxa Foods. Todos os direitos reservados.
-            {/* TODO: substitua pela razão social e CNPJ reais */}
-            <br />
-            Fluxa Foods · CNPJ 00.000.000/0001-00
           </span>
           <div className="footer-legal">
             <a href="#">Instagram</a>

@@ -48,11 +48,7 @@ export default function Navbar() {
     >
       <a href="#topo" className="nav-logo" aria-label="Fluxa Foods">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="nav-logo-icon" src="/fluxa-f.png" alt="" />
-        <span className="nav-logo-text">
-          <span className="nlt-main">Fluxa</span>
-          <span className="nlt-sub">Foods</span>
-        </span>
+        <img className="brand-logo" src="/logo-fluxa.svg" alt="" width={960} height={298} />
       </a>
 
       <div className="nav-links">
