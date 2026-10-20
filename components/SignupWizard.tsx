@@ -78,6 +78,9 @@ export default function SignupWizard() {
         (horario ? `\nMelhor horário: ${horario}` : "")
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+    // Conversão no Meta Pixel (o pixel é carregado no layout)
+    const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
+    fbq?.("track", "Lead", { content_name: "Demonstração", plano: plano });
     setSubmitted(true);
   };
 
