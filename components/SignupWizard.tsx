@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 
-const WHATSAPP_NUMBER = "5547992793347";
+const WHATSAPP_NUMBER = "5547992488212";
 
 const PLANOS = ["Basic", "Pro", "Ainda não sei"];
 const HORARIOS = ["Manhã", "Tarde", "Noite"];

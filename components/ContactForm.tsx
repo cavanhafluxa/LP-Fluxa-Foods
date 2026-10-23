@@ -3,7 +3,7 @@
 import { useState } from "react";
 import TextAnimate from "./magic/TextAnimate";
 
-const WHATSAPP_NUMBER = "5547992793347";
+const WHATSAPP_NUMBER = "5547992488212";
 
 type FieldKey =
   | "nome"

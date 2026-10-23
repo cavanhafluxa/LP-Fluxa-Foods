@@ -45,7 +45,7 @@ export default function Footer() {
             <ul>
               <li><a href="#cadastro">Criar minha conta</a></li>
               <li>
-                <a href="https://wa.me/5547992793347" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/5547992488212" target="_blank" rel="noopener noreferrer">
                   WhatsApp
                 </a>
               </li>
@@ -62,7 +62,7 @@ export default function Footer() {
           </span>
           <div className="footer-legal">
             <a href="#">Instagram</a>
-            <a href="https://wa.me/5547992793347" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href="https://wa.me/5547992488212" target="_blank" rel="noopener noreferrer">WhatsApp</a>
             <a href="#">LinkedIn</a>
           </div>
         </div>
