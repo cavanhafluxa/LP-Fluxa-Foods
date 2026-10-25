@@ -1188,3 +1188,59 @@ footer { background: var(--paper); border-top: 1px solid var(--line); padding: c
 .brand-logo { display: block; height: 34px; width: auto; }
 .footer-logo .brand-logo { height: 40px; width: auto; border-radius: 0; }
 @media (max-width: 560px) { .nav-logo .brand-logo { height: 30px; } }
+
+/* ---- Páginas legais (Privacidade / Termos) ---- */
+.legal-top { border-bottom: 1px solid var(--line); background: var(--paper); }
+.legal-top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+.legal-logo { display: inline-flex; }
+.legal-back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.legal-back:hover { color: var(--red); }
+.legal { padding: clamp(40px, 7vw, 88px) 0 clamp(56px, 8vw, 104px); }
+.legal-inner { max-width: 780px; }
+.legal-title { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 5vw, 48px); letter-spacing: -0.03em; line-height: 1.08; margin: 14px 0 10px; color: var(--ink); }
+.legal-updated { font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-bottom: 28px; }
+.legal-intro { font-size: 17px; line-height: 1.65; color: var(--ink-2); padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.legal-body { font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+.legal-body h2 { font-family: var(--display); font-weight: 700; font-size: 21px; letter-spacing: -0.015em; color: var(--ink); margin: 40px 0 12px; }
+.legal-body h3 { font-family: var(--display); font-weight: 600; font-size: 16.5px; color: var(--ink); margin: 22px 0 8px; }
+.legal-body p { margin: 0 0 14px; }
+.legal-body ul { margin: 0 0 16px; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; }
+.legal-body li::marker { color: var(--red); }
+.legal-body b, .legal-intro b { color: var(--ink); font-weight: 600; }
+.legal-body a, .legal-intro a { color: var(--red); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.legal-foot { border-top: 1px solid var(--line); padding: 28px 0 36px; }
+.legal-foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+.legal-foot-links { display: flex; flex-wrap: wrap; gap: 18px; font-family: var(--sans); font-size: 13px; }
+.legal-foot-links a { color: var(--ink-2); }
+.legal-foot-links a:hover { color: var(--red); }
+@media (max-width: 560px) { .legal-back { font-size: 13px; } .legal-top-inner { height: 64px; } }
+
+/* ---- Aviso de cookies ---- */
+.cookie-notice {
+  position: fixed; z-index: 220; left: 50%; transform: translateX(-50%);
+  bottom: calc(16px + env(safe-area-inset-bottom)); width: min(760px, calc(100% - 32px));
+  display: flex; align-items: center; gap: 16px; padding: 14px 16px 14px 20px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--e-2);
+}
+.cookie-notice p { flex: 1; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); margin: 0; }
+.cookie-notice a { color: var(--red); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.cookie-btn { flex-shrink: 0; background: var(--red); color: #fff; border: none; border-radius: var(--pill); padding: 11px 22px; font-family: var(--sans); font-weight: 700; font-size: 14px; cursor: pointer; transition: background var(--dur-fast); }
+.cookie-btn:hover { background: var(--red-ink); }
+.cookie-btn:focus-visible { outline: none; box-shadow: var(--ring); }
+/* enquanto o aviso está aberto, sobe o botão do WhatsApp e o toast */
+:root[data-cookie-open] .wa-float { bottom: calc(104px + env(safe-area-inset-bottom)); }
+:root[data-cookie-open] .live-toast { display: none; }
+@media (max-width: 560px) {
+  .cookie-notice { flex-direction: column; align-items: stretch; gap: 12px; padding: 16px; }
+  .cookie-btn { width: 100%; }
+  :root[data-cookie-open] .wa-float { bottom: calc(176px + env(safe-area-inset-bottom)); }
+}
+.signup-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---- Cadastro self-service ---- */
+.self-steps { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; }
+.self-step { display: flex; align-items: flex-start; gap: 14px; background: var(--base-2); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; }
+.self-step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--red); color: #fff; font-family: var(--display); font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.self-step b { display: block; font-family: var(--display); font-size: 15.5px; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+.self-step small { display: block; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+a.wizard-next { text-decoration: none; }

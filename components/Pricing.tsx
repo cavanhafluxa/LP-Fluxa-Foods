@@ -1,5 +1,6 @@
 "use client";
 
+import SignupLink from "./SignupLink";
 type Feature = string | { label: string; items: string[] };
 
 type Plan = {
@@ -100,12 +101,6 @@ function HeadphonesChatIcon() {
 }
 
 export default function Pricing() {
-  const selectPlan = (name: string) => {
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("fluxa:selectPlan", { detail: name }));
-    }
-  };
-
   return (
     <section className="section pricing" id="precos">
       <div className="container">
@@ -136,7 +131,7 @@ export default function Pricing() {
                 <span className="price-cents">{p.cents}</span>
                 <span className="price-period">/mês</span>
               </div>
-              <div className="price-trial">Teste grátis antes de assinar</div>
+              <div className="price-trial">5 dias grátis, sem cartão</div>
               <p className="price-tagline">{p.tagline}</p>
               <p className="price-desc">{p.desc}</p>
               <div className="price-lead">{p.lead}</div>
@@ -168,16 +163,12 @@ export default function Pricing() {
                 </p>
               )}
               {p.closing && <p className="price-closing">{p.closing}</p>}
-              <a
-                href="#cadastro"
-                className="btn btn-red btn-block"
-                onClick={() => selectPlan(p.name)}
-              >
+              <SignupLink className="btn btn-red btn-block" plan={p.name} source="precos">
                 Começar com {p.name}
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M8.5 3.5l4.5 4.5-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
+              </SignupLink>
             </div>
           ))}
         </div>
@@ -215,8 +206,12 @@ export default function Pricing() {
 
         <p className="pricing-foot">
           Prefere conversar antes de decidir?{" "}
-          <a href="#cadastro" onClick={() => selectPlan("Pro")}>
-            Agende uma demonstração ao vivo
+          <a
+            href={`https://wa.me/5547992488212?text=${encodeURIComponent("Olá! Quero uma demonstração da Fluxa Foods antes de decidir.")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Fale com a gente no WhatsApp
           </a>
           .
         </p>

@@ -1,5 +1,6 @@
 "use client";
 
+import SignupLink from "./SignupLink";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -133,15 +134,15 @@ export default function Compare() {
             ))}
           </div>
           <div className="offer-actions">
-            <a href="#cadastro" className="btn btn-red btn-lg">
+            <SignupLink className="btn btn-red btn-lg" source="comparativo">
               Começar Agora
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8h10M8.5 3.5l4.5 4.5-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </a>
+            </SignupLink>
             <a href="#precos" className="btn btn-ghost btn-lg">Ver planos</a>
           </div>
-          <div className="offer-note">Assinatura fixa · 0% de comissão · teste grátis antes de assinar</div>
+          <div className="offer-note">Assinatura fixa · 0% de comissão · 5 dias grátis, sem cartão</div>
         </div>
       </div>
     </section>

@@ -1,3 +1,4 @@
+import SignupLink from "./SignupLink";
 import type { CSSProperties } from "react";
 import HeroLottie from "./HeroLottie";
 
@@ -82,12 +83,12 @@ export default function Hero() {
             </p>
 
             <div className="hero-actions hero-in" style={delay(3)}>
-              <a href="#cadastro" className="btn btn-red btn-lg hero-cta-btn">
+              <SignupLink className="btn btn-red btn-lg hero-cta-btn" source="hero">
                 Começar Teste Grátis
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8h10M8.5 3.5l4.5 4.5-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
+              </SignupLink>
               <a href="#precos" className="btn btn-ghost btn-lg">
                 Ver Planos
               </a>
@@ -98,7 +99,7 @@ export default function Hero() {
               <span className="dot-sep" />
               <span className="pill-item"><FastBoltIcon /> Ativação em 24h</span>
               <span className="dot-sep" />
-              <span className="pill-item"><CheckShieldIcon /> 7 dias grátis</span>
+              <span className="pill-item"><CheckShieldIcon /> 5 dias grátis, sem cartão</span>
             </div>
           </div>
 

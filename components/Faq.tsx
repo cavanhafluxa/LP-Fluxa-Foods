@@ -27,7 +27,7 @@ const ITEMS = [
   },
   {
     q: "Tem teste grátis?",
-    a: "Sim. Você testa a Fluxa antes de assinar e só decide depois de ver funcionando no seu restaurante.",
+    a: "Sim. Você cria a sua conta sozinho, testa a Fluxa por 5 dias grátis, sem cartão de crédito, e só decide depois de ver funcionando no seu restaurante.",
   },
   {
     q: "Serve pro meu tipo de restaurante?",

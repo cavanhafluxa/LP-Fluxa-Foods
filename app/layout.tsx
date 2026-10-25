@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins, Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
+import CookieNotice from "@/components/CookieNotice";
 import "./globals.css";
 
 const META_PIXEL_ID = "1419138479776415";
@@ -58,6 +59,7 @@ export default function RootLayout({
     >
       <body>
         {children}
+        <CookieNotice />
 
         {/* Meta Pixel */}
         <Script id="meta-pixel" strategy="afterInteractive">

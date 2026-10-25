@@ -12,7 +12,7 @@ import Compare from "@/components/Compare";
 import Pricing from "@/components/Pricing";
 import Case from "@/components/Case";
 import Faq from "@/components/Faq";
-import SignupWizard from "@/components/SignupWizard";
+import SelfSignup from "@/components/SelfSignup";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -38,7 +38,7 @@ export default function Home() {
       <Pricing />
       <Case />
       <Faq />
-      <SignupWizard />
+      <SelfSignup />
       <FinalCta />
       <Footer />
       <WhatsAppFloat />

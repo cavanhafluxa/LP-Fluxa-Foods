@@ -1,5 +1,6 @@
 "use client";
 
+import SignupLink from "./SignupLink";
 import { useEffect, useRef, useState } from "react";
 
 const LINKS = [
@@ -60,12 +61,12 @@ export default function Navbar() {
       </div>
 
       <div className="nav-right">
-        <a href="#cadastro" className="nav-cta">
+        <SignupLink className="nav-cta" source="menu">
           Começar Agora
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
             <path d="M3 7.5h9M8 3.5l4 4-4 4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </a>
+        </SignupLink>
         <button
           className={`nav-hamburger${open ? " open" : ""}`}
           aria-label="Menu"
@@ -84,9 +85,9 @@ export default function Navbar() {
             {l.label}
           </a>
         ))}
-        <a href="#cadastro" className="nav-drawer-cta" onClick={close}>
+        <SignupLink className="nav-drawer-cta" source="menu-celular" onClick={close}>
           Começar Agora
-        </a>
+        </SignupLink>
       </div>
     </nav>
   );

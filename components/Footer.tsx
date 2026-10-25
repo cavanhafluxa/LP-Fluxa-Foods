@@ -1,3 +1,4 @@
+import SignupLink from "./SignupLink";
 export default function Footer() {
   return (
     <footer>
@@ -13,9 +14,9 @@ export default function Footer() {
               <span className="accent">voltar</span>: pontos, WhatsApp e base
               própria, sem comissão.
             </p>
-            <a href="#cadastro" className="btn btn-red">
+            <SignupLink className="btn btn-red" source="rodape">
               Começar Agora
-            </a>
+            </SignupLink>
           </div>
 
           <div className="footer-col">
@@ -43,15 +44,15 @@ export default function Footer() {
           <div className="footer-col">
             <div className="footer-col-title">Contato</div>
             <ul>
-              <li><a href="#cadastro">Criar minha conta</a></li>
+              <li><SignupLink source="rodape-link">Criar minha conta</SignupLink></li>
               <li>
                 <a href="https://wa.me/5547992488212" target="_blank" rel="noopener noreferrer">
                   WhatsApp
                 </a>
               </li>
               <li><a href="#">Instagram</a></li>
-              <li><a href="#">Termos de Uso</a></li>
-              <li><a href="#">Privacidade</a></li>
+              <li><a href="/termos">Termos de Uso</a></li>
+              <li><a href="/privacidade">Privacidade</a></li>
             </ul>
           </div>
         </div>
@@ -59,6 +60,8 @@ export default function Footer() {
         <div className="footer-bottom">
           <span className="footer-copy">
             © 2026 Fluxa Foods. Todos os direitos reservados.
+            <br />
+            WKS SERVIÇOS INTEGRADOS LTDA · CNPJ 65.127.335/0001-10
           </span>
           <div className="footer-legal">
             <a href="#">Instagram</a>
